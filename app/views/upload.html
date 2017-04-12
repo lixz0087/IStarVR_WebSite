@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col s4 push-s4">
+      <h5 align="center">Upload Content</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 card">
+      <div class="card-content">
+        <form>
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="name" type="text" class="validate">
+              <label for="name">Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="price" type="text" class="validate">
+              <label for="price">Price</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <!--<input id="tags" type="text" class="validate">-->
+              <!--<label for="tags">Tags</label>-->
+              <select multiple>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">Tag 1</option>
+                <option value="2">Tag 2</option>
+                <option value="3">Tag 3</option>
+              </select>
+              <label>Tags</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="introduction" class="materialize-textarea"></textarea>
+              <label for="introduction">Introduction</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <select>
+                <option value="" disabled selected>Choose your file type</option>
+                <optgroup label="3D model file(.fbx)">
+                  <option value="1">Avatars</option>
+                  <option value="2">Clothes</option>
+                  <option value="2">Others</option>
+                </optgroup>
+                <optgroup label="Video(.mp4)">
+                  <option value="3">360&deg; videos</option>
+                  <option value="4">VR videos</option>
+                </optgroup>
+              </select>
+              <label>File Type</label>
+            </div>
+            <div class="col s6">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Choose</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input id="filePath" class="file-path validate" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s6">
+              <a class="waves-effect waves-light btn right"><i class="material-icons left">file_upload</i>Upload</a>
+            </div>
+            <div class="col s6">
+              <a routerLink="/heroes" routerLinkActive="active"><a class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
