@@ -20,7 +20,7 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/index', {
+      .when('/', {
         templateUrl: 'views/homeBeforeLogin.html',
         controller: 'HomebeforeloginCtrl',
         controllerAs: 'homebeforelogin'

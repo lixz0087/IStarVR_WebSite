@@ -1,3 +1,37 @@
-.container {
-  margin-top: 5%;
+.signup-container {
+  width: 50em;
+  height: auto;
+  border: 1px solid #888888;
+  margin-top: 20%;
+  border-radius: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-bottom: 3em;
+}
+
+#logo {
+  width: 12em;
+  height: 9em;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#inputfield-username {
+  margin-left: 3em;
+  margin-right: 3em;
+  margin-top: 2em;
+}
+
+#inputfield-email {
+  margin-left: 3em;
+  margin-right: 3em;
+  margin-top: 1em;
+}
+
+#sign-up-div {
+  width: 20em;
+  height: auto;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
