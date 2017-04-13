@@ -17,19 +17,19 @@
 }
 
 #inputfield-username {
-  margin-left: 3em;
-  margin-right: 3em;
+  margin-left: 10em;
+  margin-right: 10em;
   margin-top: 2em;
 }
 
 #inputfield-email {
-  margin-left: 3em;
-  margin-right: 3em;
+  margin-left: 10em;
+  margin-right: 10em;
   margin-top: 1em;
 }
 
 #sign-up-div {
-  width: 20em;
+  width: 10em;
   height: auto;
   left: 0;
   right: 0;
