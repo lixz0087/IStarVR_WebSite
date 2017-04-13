@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
   <div class="row">
     <div class="col s4 push-s4">
       <h5 align="center">Upload Content</h5>
@@ -19,10 +19,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s12">-->
               <!--<input id="tags" type="text" class="validate">-->
               <!--<label for="tags">Tags</label>-->
-              <select multiple>
+              <!--<select multiple>
                 <option value="" disabled selected>Choose your option</option>
                 <option value="1">Tag 1</option>
                 <option value="2">Tag 2</option>
@@ -75,6 +75,65 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<head>
+  <link rel="stylesheet" href="../styles/upload.css">
+</head>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="upload-container">
+      <div style=" width:100%; text-align:center; padding-top:1em;">
+        <span style="font-size:16px;"><b>Upload Your Amazing Content!!</b></span>
+      </div>
+      <div class="input-group" id="inputfield-name">
+        <span class="input-group-addon"><b>Name </b></span>
+        <input type="text" class="form-control" placeholder="Enter name of file" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group" id="inputfield-price">
+        <span class="input-group-addon"><b>Price </b></span>
+        <input type="text" class="form-control" placeholder="Enter price of file" aria-describedby="basic-addon1">
+        <span class="input-group-addon">$</span>
+      </div>
+      <div class="input-group" id="inputfield-desc">
+        <span class="input-group-addon"><b>Description </b></span>
+        <textarea rows="4" aria-describedby="basic-addon1"placeholder="Enter a brief description of the file" class="form-control" cols="50"/>
+      </div>
+      <div>
+        <p style="float:right; margin-right:10em;">0/200</p>
+      </div>
+      <div style="margin-top:1em; margin-left:10em; margin-right:10em;" class="dropdown">
+        <select  class="form-control">
+          <option value="" disabled selected>Choose your file type</option>
+          <optgroup label="3D model file(.fbx)">
+            <option value="1">Avatars</option>
+            <option value="2">Clothes</option>
+            <option value="2">Others</option>
+          </optgroup>
+          <optgroup label="Video(.mp4)">
+            <option value="3">360&deg; videos</option>
+            <option value="4">VR videos</option>
+          </optgroup>
+        </select>
+      </div>
+      <div >
+        <label class="btn" for="my-file-selector" style="margin-top: 1em; background: #E8E8E8; color: black; margin-left:10em;">
+        <input id="my-file-selector" type="file" style="display:none; background: #E8E8E8;" onchange="$('#upload-file-info').html($(this).val());">
+                Select your file
+        </label>
+        <span class='label label-info' id="upload-file-info"></span>
+      </div>
+      <div style="margin-left:10em; margin-right:10em; margin-top: 3em;">
+          <button type="button" class="btn btn-default" style="width:10em; margin-left:2em; background: #E8E8E8; color: black;">Upload</button>
+          <button type="button" class="btn btn-default" style="width:10em; float:right; margin-right:2em; background: #E8E8E8; color: black;">Cancel</button>
+      </div>
+      <div class="progress" style="margin-left:1em; margin-right:1em; margin-top:1em;" ng-if="true">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+          </div>
       </div>
     </div>
   </div>
