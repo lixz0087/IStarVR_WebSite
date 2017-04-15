@@ -8,7 +8,7 @@
  * Controller of the istarVrWebSiteApp
  */
 angular.module('istarVrWebSiteApp')
-  .controller('UploadCtrl', function ($scope, $http) {
+  .controller('UploadCtrl', function ($scope, $http, Upload) {
 
     $scope.lengthOfTextArea = 0;
   
@@ -21,6 +21,8 @@ angular.module('istarVrWebSiteApp')
     };
 
     $scope.uploadContent = function() {
-      console.log($scope.uploadForm);
+      if ($scope.file) {
+        console.log($scope.file);
+      }
     };
 });
