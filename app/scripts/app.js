@@ -23,43 +23,35 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/homeBeforeLogin.html',
-        controller: 'HomebeforeloginCtrl',
-        controllerAs: 'homebeforelogin'
+        controller: 'HomebeforeloginCtrl'
       })
       .when('/upload', {
         templateUrl: 'views/upload.html',
-        controller: 'UploadCtrl',
-        controllerAs: 'upload'
+        controller: 'UploadCtrl'
       })
       .when('/home', {
         templateUrl: 'views/homepage.html',
-        controller: 'HomepageCtrl',
-        controllerAs: 'homepage'
+        controller: 'HomepageCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
-        controller: 'LoginCtrl',
-        controllerAs: 'login'
+        controller: 'LoginCtrl'
       })
       .when('/profile', {
         templateUrl: 'views/profile.html',
-        controller: 'ProfileCtrl',
-        controllerAs: 'profile'
+        controller: 'ProfileCtrl'
       })
       .when('/signup', {
         templateUrl: 'views/signup.html',
-        controller: 'SignupCtrl',
-        controllerAs: 'signup'
+        controller: 'SignupCtrl'
       })
       .when('/profile/editProfile', {
         templateUrl: 'views/editprofile.html',
-        controller: 'ProfileCtrl',
-        controllerAs: 'editprofile'
+        controller: 'ProfileCtrl'
       })
       .when('/myroute', {
         templateUrl: 'views/myroute.html',
-        controller: 'MyrouteCtrl',
-        controllerAs: 'myroute'
+        controller: 'MyrouteCtrl'
       })
       .otherwise({
         redirectTo: '/'

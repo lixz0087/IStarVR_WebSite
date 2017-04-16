@@ -11,7 +11,8 @@
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
-    "ng-file-upload-shim": "^12.2.13"
+    "ng-file-upload-shim": "^12.2.13",
+    "aws-sdk": "aws-sdk-js#^2.41.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

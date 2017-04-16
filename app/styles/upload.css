@@ -6,17 +6,15 @@
   border-radius: 1px;
   box-shadow: 10px 10px 5px #888888;
   padding-bottom: 3em;
+  padding-left: 3em;
+  padding-right: 3em;
 }
 
 #inputfield-name {
-    margin-left: 10em;
-    margin-right: 10em;
     margin-top: 2em;
 }
 
 #inputfield-price {
-    margin-left: 10em;
-    margin-right: 10em;
     margin-top: 1em;
 }
 
@@ -24,11 +22,8 @@
     background: #F8F8F8;
     color: black;
     height: auto;
-    margin-left: 10em;
 }
 
 #inputfield-desc {
-    margin-left: 10em;
-    margin-right: 10em;
     margin-top: 1em;
 }
