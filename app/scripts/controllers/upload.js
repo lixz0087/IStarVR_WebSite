@@ -59,6 +59,30 @@ angular.module('istarVrWebSiteApp')
       }
     };
 
+    // helper function to hide/show progress bar
+    function hideShowProgessBar(status) {
+      // important piece of code - Angular doesent update data when async calls comeback
+      // updating data happens only when an external event like a button click is performed
+      // hence encapsulating it with $apply() which forces angular to update data
+      if (status === "hide") {
+          console.log("if called for hiding error");
+          $scope.showProgressBar = false;
+          $scope.successful = true;
+          $scope.disableUploadBtn = false;
+          // $scope.$apply(function() {
+            
+          // });
+      } else {
+        // $scope.$apply(function() {
+            
+        // });
+        console.log("else called for showing error");
+        $scope.showProgressBar = false;
+        $scope.erroredOut = true;
+        $scope.disableUploadBtn = false;
+      }
+    }
+
     // helper function for uploading to S3
     function uploadContentHelper(file) {    
       $scope.showProgressBar = true;
@@ -88,14 +112,38 @@ angular.module('istarVrWebSiteApp')
 
             } else {
                 console.log(data);
-                // important piece of code - Angular doesent update data when async calls comeback
-                // updating data happens only when an external event like a button click is performed
-                // hence encapsulating it with $apply() which forces angular to update data
-                $scope.$apply(function() {
-                  $scope.showProgressBar = false;
-                  $scope.successful = true;
-                  $scope.disableUploadBtn = false;
+                var postParamsForMeta = {
+                  name_of_file: $scope.name,
+                  name_of_uploader: "ninja",
+                  price: $scope.price,
+                  description: $scope.description,
+                  file_type: file.type,
+                  etag: data.ETag,
+                  bucket: data.Bucket,
+                  key: data.Key,
+                  location: data.Location
+                };
+                var req = {
+                  method: "POST",
+                  url: "http://localhost:8086/api/0.1/save_content_meta",
+                  headers: {
+                    "Authorization": 'Bearer ' + $cookies.getObject('oauth2').access_token,
+                    "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+                  },
+                  data: $httpParamSerializer(postParamsForMeta)
+                };
+                $http(req).then(function(response) {
+                  if (response.data.status === "success") {
+                    hideShowProgessBar("hide");
+                  } else {
+                    console.log(response);
+                    hideShowProgessBar("show_error");
+                  }
+                }, function(error) {
+                  hideShowProgessBar("show_error");
                 });
+                
+                
             }
       });
    }
