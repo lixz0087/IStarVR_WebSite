@@ -7,8 +7,44 @@
  * # UploadCtrl
  * Controller of the istarVrWebSiteApp
  */
+//
+
 angular.module('istarVrWebSiteApp')
-  .controller('UploadCtrl', function ($scope, $http, Upload) {
+  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer) {
+
+    $scope.requestTempS3Creds = function() {
+        var postParams = {
+          username: "ninja",
+          bucket_type: "private"
+        }
+
+        var req = {
+          method: "POST",
+          url: "http://localhost:8086/api/0.1/get_temp_credentials",
+          headers: {
+            "Authorization": 'Bearer ' + $cookies.getObject('oauth2').access_token,
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+          },
+          data: $httpParamSerializer(postParams)
+        }
+
+        $http(req).then(function (data) {
+          $cookies.putObject('temp-s3-creds', data);
+          
+        }, function (error) {
+          console.log(error);
+        });
+    }
+
+    if ($cookies.getObject('oauth2') !== undefined) {
+        // always check for expiry of token before accessing it
+        // if expired, remove it and make a request to get the token again using refresh-token
+
+        // make a request to get_temp_creds API to get temporary AWS credentials
+        $scope.requestTempS3Creds();
+    } else {
+        console.log("Lost cookie");
+    }
 
     $scope.lengthOfTextArea = 0;
   
@@ -22,6 +58,8 @@ angular.module('istarVrWebSiteApp')
 
     // helper function for uploading to S3
     function uploadContentHelper(file) {
+
+      console.log();
     
       $scope.showProgressBar = true;
       $scope.erroredOut = false;
@@ -30,9 +68,9 @@ angular.module('istarVrWebSiteApp')
 
       var s3 = new AWS.S3({
         apiVersion: "2006-03-01",
-        accessKeyId: "ASIAIP3LPKDSKXSTXDJA",
-        secretAccessKey: "lYYFn0YwuKdVozt9AYgHC307neR5uTEQsgB7YmJe",
-        sessionToken: "FQoDYXdzEPr//////////wEaDE9Z+HmJZhsfkk7xyCL5AzovGSCtI0mkHCXdW0F0VUpQA/C7yuV05btQsktGFSgsg7PvB0X9gIWzS9G48ySY1yWt/FNwC1qRcgK9+z9SG/oo17s6KXBuNlZdsFWR1rlpST/HmG9D+PPk4g2D9Hby7ULGNUofCLUyTObrd/y/ZPbrhLu1IMuhdH4ExDepLFPFf/B8KhnO/YZ5LIvuWnz3E/zUZEeVBe6s/8+ek/E/cNkTeRFQBaWXhNmIHlKpSy27FxM+V9Y1hcqtUvE3+P3kVMOdFi+CIVhzdjtajc3DlfXamzDxO0luVUi+zvsTaU49EZSiv/J9zQUiLgA/DkncAWT4aT9AWWrcOemT/HcwXqW1BV+2oR/oQ57ai68MhoVqddndU+nHvHhNr+EDHdElch9IuuXcJGUgNMo+jNK1FnV6qsTG8GolL4geJH95gRzYsffMhJFWQo252itEelW+fdaGo8HC49dCcK0QiD+IVNmUNXuVqKwCh2iXN4MJYFGuAO5KDR3uUgMkgWmRlyyz8pca8uGvHmUCBlBpMsJwlRdfImd//RnnpU9Uc8Yu/zHuxMK5vCe2DSuzmhn3FWiF+pDUFt2qRoN2sjUfNQ6ZU6EMpOM/bictwdS5oi0MgBdwdfbI45MBnbmWlVnMM2Skh6UEMuqDJMPJwo5njOd2Zwt1r/t4drd3b/0otYTLxwU="
+        accessKeyId: $cookies.getObject('temp-s3-creds').data.Credentials.AccessKeyId,
+        secretAccessKey: $cookies.getObject('temp-s3-creds').data.Credentials.SecretAccessKey,
+        sessionToken: $cookies.getObject('temp-s3-creds').data.Credentials.SessionToken
       });
 
         var params = {Bucket: 'istarvr', Key: 'ninja/'+file.name, ContentType: file.type , Body: file};
