@@ -10,13 +10,37 @@
 //
 
 angular.module('istarVrWebSiteApp')
-  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer) {
+  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window) {
 
-    $scope.requestTempS3Creds = function() {
+    // check if oauth cookie is set and if it hasn't expired
+    if ($cookies.getObject("oauth2") !== undefined) {
+      if ($cookies.getObject("oauth2").expires_in <= ((new Date().getTime()) - 1000)) {
+        OauthService.fetchOauthToken();
+        console.log("Requesting for oauth token IF");
+      } else {
+        //check if temp-s3-creds cookie is already set, if set check for expiry
+        if ($cookies.getObject('temp-s3-creds') !== undefined) {
+          if (Date.parse($cookies.getObject('temp-s3-creds').data.Credentials.Expiration) <= ((new Date().getTime()) - 1000)) {
+              requestTempS3Creds();
+              console.log("Requesting for S3 token IF");
+          }
+        } else {
+          requestTempS3Creds();
+          console.log("Requesting for S3 token else");
+        }
+      }
+    } else {
+      //OauthService.fetchOauthToken();
+      $window.location.href = "/login";
+      console.log("Requesting for oauth token else");
+    }
+
+    // helper function to request temporary S3 cred's from server
+    var requestTempS3Creds = function() {
         var postParams = {
           username: "ninja",
           bucket_type: "private"
-        }
+        };
 
         var req = {
           method: "POST",
@@ -26,25 +50,14 @@ angular.module('istarVrWebSiteApp')
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
           },
           data: $httpParamSerializer(postParams)
-        }
+        };
 
         $http(req).then(function (data) {
           $cookies.putObject('temp-s3-creds', data);
-          
         }, function (error) {
           console.log(error);
         });
-    }
-
-    if ($cookies.getObject('oauth2') !== undefined) {
-        // always check for expiry of token before accessing it
-        // if expired, remove it and make a request to get the token again using refresh-token
-
-        // make a request to get_temp_creds API to get temporary AWS credentials
-        $scope.requestTempS3Creds();
-    } else {
-        console.log("Lost cookie");
-    }
+    };
 
     $scope.lengthOfTextArea = 0;
   
@@ -58,8 +71,6 @@ angular.module('istarVrWebSiteApp')
 
     // helper function for uploading to S3
     function uploadContentHelper(file) {
-
-      console.log();
     
       $scope.showProgressBar = true;
       $scope.erroredOut = false;

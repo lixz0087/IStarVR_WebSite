@@ -8,10 +8,9 @@
  * Controller of the istarVrWebSiteApp
  */
 angular.module('istarVrWebSiteApp')
-  .controller('LoginCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('LoginCtrl', function (OauthService, $cookies) {
+    
+    // fetching oauth token and storing in cookie (both operations done by service)
+    OauthService.fetchOauthToken();
+    console.log($cookies.getObject("oauth2"));
   });
