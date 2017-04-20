@@ -53,6 +53,11 @@ angular
         templateUrl: 'views/myroute.html',
         controller: 'MyrouteCtrl'
       })
+      .when('/surbhi', {
+        templateUrl: 'views/surbhi.html',
+        controller: 'SurbhiCtrl',
+        controllerAs: 'surbhi'
+      })
       .otherwise({
         redirectTo: '/'
       });
