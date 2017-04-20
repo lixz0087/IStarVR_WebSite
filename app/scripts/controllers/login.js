@@ -8,9 +8,21 @@
  * Controller of the istarVrWebSiteApp
  */
 angular.module('istarVrWebSiteApp')
-  .controller('LoginCtrl', function (OauthService, $cookies) {
-    
+  .controller('LoginCtrl',  function ($scope, OauthService, $cookies, $location ) {
+
+
+     $scope.submit = function() {
+       OauthService.fetchOauthToken($scope.username, $scope.password, function(err){
+         if(err) $location.path('/');
+         $location.path('/home');
+       });
+
+
+
+     }
+    //
+    // };
+
     // fetching oauth token and storing in cookie (both operations done by service)
-    OauthService.fetchOauthToken();
-    console.log($cookies.getObject("oauth2"));
+     //console.log($cookies.getObject("oauth2"));
   });
