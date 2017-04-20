@@ -17,7 +17,7 @@ angular.module('istarVrWebSiteApp')
          $location.path('/home');
        });
 
-   
+
 
      }
     //
