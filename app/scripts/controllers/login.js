@@ -10,15 +10,11 @@
 angular.module('istarVrWebSiteApp')
   .controller('LoginCtrl',  function ($scope, OauthService, $cookies, $location ) {
 
-
      $scope.submit = function() {
        OauthService.fetchOauthToken($scope.username, $scope.password, function(err){
          if(err) $location.path('/');
          $location.path('/home');
        });
-
-
-
      }
     //
     // };

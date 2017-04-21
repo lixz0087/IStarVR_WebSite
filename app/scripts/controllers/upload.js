@@ -13,20 +13,20 @@ angular.module('istarVrWebSiteApp')
   .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window) {
 
     // check if oauth cookie is set and if it hasn't expired
-    if ($cookies.getObject("oauth2") !== undefined) {
-      if ($cookies.getObject("oauth2").expires_in <= ((new Date().getTime()) - 1000)) {
-        OauthService.fetchOauthToken();
-        console.log("Requesting for oauth token IF");
+    if ($cookies.getObject("access_token") !== undefined) {
+      if ($cookies.getObject("expires_in") <= ((new Date().getTime()) - 1000)) {
+          OauthService.fetchRefreshToken();
+          console.log("Requesting for oauth token IF");
       }
     } else {
-      $window.location.href = "/login";
+      $window.location.href = "/#!/login";
       console.log("Requesting for oauth token else");
     }
 
     // helper function to request temporary S3 cred's from server
     var requestTempS3Creds = function(cookieType) {
         var postParams = {
-          username: "ninja",
+          username: $cookies.getObject("username"),
           bucket_type: cookieType
         };
 
@@ -34,7 +34,7 @@ angular.module('istarVrWebSiteApp')
           method: "POST",
           url: "http://localhost:8086/api/0.1/get_temp_credentials",
           headers: {
-            "Authorization": 'Bearer ' + $cookies.getObject('oauth2').access_token,
+            "Authorization": 'Bearer ' + $cookies.getObject("access_token"),
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
           },
           data: $httpParamSerializer(postParams)
@@ -114,7 +114,7 @@ angular.module('istarVrWebSiteApp')
                 console.log(data);
                 var postParamsForMeta = {
                   name_of_file: $scope.name,
-                  name_of_uploader: "ninja",
+                  name_of_uploader: $cookies.getObject("username"),
                   price: $scope.price,
                   description: $scope.description,
                   file_type: file.type,
@@ -127,7 +127,7 @@ angular.module('istarVrWebSiteApp')
                   method: "POST",
                   url: "http://localhost:8086/api/0.1/save_content_meta",
                   headers: {
-                    "Authorization": 'Bearer ' + $cookies.getObject('oauth2').access_token,
+                    "Authorization": 'Bearer ' + $cookies.getObject('access_token'),
                     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
                   },
                   data: $httpParamSerializer(postParamsForMeta)
@@ -141,9 +141,7 @@ angular.module('istarVrWebSiteApp')
                   }
                 }, function(error) {
                   hideShowProgessBar("show_error");
-                });
-                
-                
+                });       
             }
       });
    }
