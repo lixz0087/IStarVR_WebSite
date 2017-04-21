@@ -10,19 +10,6 @@
 angular.module('istarVrWebSiteApp')
   .controller('HomepageCtrl',  function ($scope, OauthBearerService,$cookies ) {
 
-    OauthBearerService.getData('/users/'+$cookies.getObject("username"), function(data, err){
-
-      if(err)
-      {
-        $location.path('/');
-      }
-
-      $scope.username = data.username;
-
-    });
-
-
-
 
 
 

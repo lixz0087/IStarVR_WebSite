@@ -12,9 +12,7 @@ angular.module('istarVrWebSiteApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
     // ---------------------------- on log-out, the cookies have to be removed --------------------------------
 
-    this.abc = function() {
-      return "ab";
-    }
+
 
 
     this.fetchOauthToken = function(username,password, callback) {
@@ -27,7 +25,7 @@ angular.module('istarVrWebSiteApp')
         password: password,
         grant_type: "password"
       }
-      var encoded = btoa("f5RTKBhZxygxAVAt:Q8UVZUcrcGh23klxAvC5B9Ck"); //clientid:clientsecret
+      var encoded = btoa("9nkMEet48vhNHnE0:BMIN9PcoZGd9qatPJsWhDhvW"); //clientid:clientsecret
 
       var req = {
         method: "POST",

@@ -58,6 +58,11 @@ angular
         controller: 'SurbhiCtrl',
         controllerAs: 'surbhi'
       })
+      .when('/welcome', {
+        templateUrl: 'views/welcome.html',
+        controller: 'WelcomeCtrl',
+        controllerAs: 'welcome'
+      })
       .otherwise({
         redirectTo: '/'
       });
