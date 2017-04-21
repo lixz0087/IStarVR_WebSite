@@ -63,6 +63,11 @@ angular
         controller: 'WelcomeCtrl',
         controllerAs: 'welcome'
       })
+      .when('/friend', {
+        templateUrl: 'views/friend.html',
+        controller: 'FriendCtrl',
+        controllerAs: 'friend'
+      })
       .otherwise({
         redirectTo: '/'
       });
