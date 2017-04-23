@@ -12,6 +12,9 @@
 angular.module('istarVrWebSiteApp')
   .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window) {
 
+    var tagArray = ['Travel', 'Film', 'Sports', 'Concerts', 'Education', 'Fashion', 'Romance', 'Series', 'Adventure',
+                    'Horror', 'Drama', 'Action', 'Comedy', 'Documentary', 'Animation'];
+
     // check if oauth cookie is set and if it hasn't expired
     if ($cookies.getObject("access_token") !== undefined) {
       if ($cookies.getObject("expires_in") <= ((new Date().getTime()) - 1000)) {
@@ -82,12 +85,9 @@ angular.module('istarVrWebSiteApp')
         $scope.disableUploadBtn = false;
       }
     }
-
+    
     // function to upload met-data to backend
     function uploadMetaToBackend(data, dataFromThubmnail) {
-      console.log("meta to backend");
-      console.log(data);
-      console.log(dataFromThubmnail);
       var postParamsForMeta = {
           name_of_file: $scope.name,
           name_of_uploader: $cookies.getObject("username"),
@@ -98,7 +98,8 @@ angular.module('istarVrWebSiteApp')
           bucket: data.Bucket,
           key: data.Key,
           location: data.Location,
-          thumbnail_location: dataFromThubmnail.Location
+          thumbnail_location: dataFromThubmnail.Location,
+          tag: tagArray[parseInt($scope.tagOfVideo)]
       };
       var req = {
         method: "POST",
