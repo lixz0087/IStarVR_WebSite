@@ -99,8 +99,10 @@ angular.module('istarVrWebSiteApp')
           key: data.Key,
           location: data.Location,
           thumbnail_location: dataFromThubmnail.Location,
-          tag: tagArray[parseInt($scope.tagOfVideo)]
+          tag: tagArray[parseInt($scope.tagOfVideo)] === undefined ? "" : tagArray[parseInt($scope.tagOfVideo)]
       };
+      // clearing tag number to prevent duplication
+      $scope.tagOfVideo = '';
       var req = {
         method: "POST",
         url: "http://localhost:8086/api/0.1/save_content_meta",
