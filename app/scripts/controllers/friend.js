@@ -8,10 +8,66 @@
  * Controller of the istarVrWebSiteApp
  */
 angular.module('istarVrWebSiteApp')
-  .controller('FriendCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('FriendCtrl', function (OauthBearerService, $scope, $cookies) {
+
+
+    var init = function() {
+      OauthBearerService.getData("/friendrequest/" + $cookies.getObject('username'), function (data) {
+        console.log(data);
+        $scope.requests = data.list;
+      })
+
+      OauthBearerService.getData("/friends/" + $cookies.getObject('username'), function (data) {
+        console.log(data);
+        $scope.friends = data.list;
+      })
+    }
+    init();
+
+    $scope.acceptRequest = function(username){
+
+      var postParams = {
+
+        username: username,
+        status: "accept"
+
+      }
+      OauthBearerService.postData("/friendrequest/status/"+ $cookies.getObject('username'), postParams, function (data){
+        console.log(data);
+        init()
+
+
+      })
+
+    }
+
+    $scope.ignoreRequest = function(username){
+
+      var postParams = {
+
+        username: username,
+        status: "ignore"
+
+      }
+      OauthBearerService.postData("/friendrequest/status/"+ $cookies.getObject('username'), postParams, function (data){
+        console.log(data);
+        init()
+
+      })
+
+    }
+
+
+
+    $scope.searchFriends = function(){
+      if($scope.searchData){
+        OauthBearerService.getData("/search/"+ $scope.searchData, function (data) {
+          $scope.results = data;
+        })
+
+      }
+
+    }
+
+
   });

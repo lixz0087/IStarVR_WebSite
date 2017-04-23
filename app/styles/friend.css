@@ -17,10 +17,32 @@
   margin-top: 3em;
 }
 
+.searchitem {
+  height: 6em;
+  width: 46em;
+  margin-left: 2em;
+  display: flex;
+  display: -webkit-flex;
+  border: 1px solid black;
+}
+
+.searchDesc{
+  margin: 1px;
+}
+
+.searchDescdiv{
+  width: 15em;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
 .ignore{
+  margin-top: 1em;
+  margin-left: 1em;
   width: 10em;
   height: 2.5em;
 }
+
 
 
 

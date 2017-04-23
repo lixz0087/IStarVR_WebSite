@@ -13,8 +13,12 @@ angular.module('istarVrWebSiteApp')
 
      $scope.submit = function() {
        OauthService.fetchOauthToken($scope.username, $scope.password, function(err){
-         if(err) $location.path('/');
-         $location.path('/home');
+         if(err){
+
+         }
+         else {
+           $location.path('/profile');
+         }
        });
 
 

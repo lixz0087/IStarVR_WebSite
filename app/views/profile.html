@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="ProfileCtrl">
   <div class=" panel panel-default">
     <div class="panel-heading">
       <div class="row">
@@ -6,7 +6,8 @@
           <img class="img-circle" src="../images/steveJobs.png" width="100px" height="100px">
         </div>
         <div class="col-xs-12 col-md-9">
-          <h5>Steve Jobs</h5>
+          <h5>{{fullname}}</h5>
+          <h5>{{username}}</h5>
           <a href="#!/profile/editProfile" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>Edit Profile</a>
         </div>
       </div>
@@ -15,47 +16,43 @@
       <table class="table">
         <tr>
           <td>Firstname</td>
-          <td>Steve</td>
+          <td>{{firstname}}</td>
         </tr>
         <tr>
           <td>Lastname</td>
-          <td>Jobs</td>
+          <td>{{lastname}}</td>
         </tr>
         <tr>
           <td>Email</td>
-          <td>abc@apple.com</td>
+          <td>{{email}}</td>
         </tr>
         <tr>
           <td>Phone</td>
-          <td>123-456-6789</td>
+          <td>{{phone}}</td>
         </tr>
         <tr>
           <td>Birthday</td>
-          <td></td>
+          <td>{{birthday}}</td>
         </tr>
         <tr>
           <td>Occupation</td>
-          <td>Programmer</td>
+          <td>{{occupation}}</td>
         </tr>
         <tr>
           <td>Country</td>
-          <td>United State</td>
+          <td>{{country}}</td>
         </tr>
         <tr>
           <td>Area</td>
-          <td>California</td>
-        </tr>
-        <tr>
-          <td>Storelink</td>
-          <td>www.apple.com</td>
+          <td>{{area}}</td>
         </tr>
         <tr>
           <td>Work</td>
-          <td></td>
+          <td>{{work}}</td>
         </tr>
         <tr>
           <td>Introduction</td>
-          <td>Stay foolish stay hungry</td>
+          <td>{{introduction}}</td>
         </tr>
       </table>
     </div>
