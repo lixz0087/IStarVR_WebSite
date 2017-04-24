@@ -10,6 +10,10 @@
 angular.module('istarVrWebSiteApp')
   .controller('WelcomeCtrl',  function (OauthBearerService,$cookies,$location,$scope) {
 
+    if(!$cookies.getObject('token')){
+      $location.path('/login')
+    }
+
     var getparams = $location.search();
 
     $scope.addFriend = function()

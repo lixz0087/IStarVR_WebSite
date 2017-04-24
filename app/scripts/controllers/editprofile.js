@@ -11,7 +11,11 @@
 
 
 angular.module('istarVrWebSiteApp')
-  .controller('EditprofileCtrl', function (OauthBearerService, $http, $httpParamSerializer,$scope, $cookies, $location) {
+  .controller('EditprofileCtrl', function (OauthBearerService, $scope, $cookies, $location) {
+
+    if(!$cookies.getObject('token')){
+      $location.path('/login')
+    }
 
     $scope.submitForm = function(){
 

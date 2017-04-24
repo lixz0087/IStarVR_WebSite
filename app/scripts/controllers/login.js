@@ -18,6 +18,7 @@ angular.module('istarVrWebSiteApp')
 
          }
          else {
+
            $location.path('/profile');
          }
        });

@@ -25,7 +25,7 @@ angular.module('istarVrWebSiteApp')
         password: password,
         grant_type: "password"
       }
-      var encoded = btoa("9nkMEet48vhNHnE0:BMIN9PcoZGd9qatPJsWhDhvW"); //clientid:clientsecret
+      var encoded = btoa("mU77Qdq4iw8jZVRJ:2UdVkcEAXbnfuaMtQaWtFuuY"); //clientid:clientsecret
 
       var req = {
         method: "POST",
