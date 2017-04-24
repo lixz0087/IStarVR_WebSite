@@ -10,6 +10,10 @@
 angular.module('istarVrWebSiteApp')
   .controller('ProfileCtrl', function (OauthBearerService,$cookies,$location,$scope) {
 
+      if(!$cookies.getObject('token')){
+        $location.path('/login')
+      }
+
 
       OauthBearerService.getData('/users/' + $cookies.getObject('username'), function (data, err) {
 

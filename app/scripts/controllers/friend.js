@@ -8,8 +8,11 @@
  * Controller of the istarVrWebSiteApp
  */
 angular.module('istarVrWebSiteApp')
-  .controller('FriendCtrl', function (OauthBearerService, $scope, $cookies) {
+  .controller('FriendCtrl', function (OauthBearerService, $scope, $cookies, $location) {
 
+    if(!$cookies.getObject('token')){
+      $location.path('/login')
+    }
 
     var init = function() {
       OauthBearerService.getData("/friendrequest/" + $cookies.getObject('username'), function (data) {
