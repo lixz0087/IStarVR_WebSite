@@ -53,7 +53,7 @@ angular.module('istarVrWebSiteApp')
         console.log();
 
       }, function(error){
-
+         callback(error)
         console.log(error);
         return "error";
       });

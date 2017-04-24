@@ -14,6 +14,7 @@ angular.module('istarVrWebSiteApp')
      $scope.submit = function() {
        OauthService.fetchOauthToken($scope.username, $scope.password, function(err){
          if(err){
+           alert("Please check username/password")
 
          }
          else {
