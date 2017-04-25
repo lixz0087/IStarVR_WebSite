@@ -58,6 +58,16 @@ angular
         controller: 'SurbhiCtrl',
         controllerAs: 'surbhi'
       })
+      .when('/player360Video', {
+        templateUrl: 'views/player360Video.html',
+        controller: 'Player360VideoCtrl',
+        controllerAs: 'Player360VideoCtrl'
+      })
+      .when('/player3DModel', {
+        templateUrl: 'views/player3DModel.html',
+        controller: 'Player360ModelCtrl',
+        controllerAs: 'Player360ModelCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
