@@ -14,7 +14,7 @@ angular.module('istarVrWebSiteApp')
   .controller('EditprofileCtrl',  function ( OauthBearerService, $http, $scope, $cookies, $location, $route) {
 
 
-    if(!$cookies.getObject('token')){
+    if(!$cookies.getObject('access_token')){
       $location.path('/login')
     }
     $scope.profilePicture = 'http://localhost:8086/images/'+$cookies.getObject('username')
@@ -28,7 +28,7 @@ angular.module('istarVrWebSiteApp')
       var req = {
         method: "POST",
         url: "http://localhost:8086/api/0.1/upload",
-        headers: {'Content-Type': undefined , "Authorization": "Bearer " + $cookies.getObject("token")},
+        headers: {'Content-Type': undefined , "Authorization": "Bearer " + $cookies.getObject("access_token")},
         transformRequest: angular.identity,
         data: fd
       };

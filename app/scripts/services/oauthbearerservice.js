@@ -24,7 +24,7 @@ angular.module('istarVrWebSiteApp')
         method: "GET",
         url: "http://localhost:8086/api/0.1"+ url,
         headers: {
-          "Authorization": "Bearer " + $cookies.getObject("token"),
+          "Authorization": "Bearer " + $cookies.getObject("access_token"),
 
         },
 
@@ -59,7 +59,7 @@ angular.module('istarVrWebSiteApp')
         method: "POST",
         url: "http://localhost:8086/api/0.1" + url,
         headers: {
-          "Authorization": "Bearer " + $cookies.getObject("token"),
+          "Authorization": "Bearer " + $cookies.getObject("access_token"),
           "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
 
         },

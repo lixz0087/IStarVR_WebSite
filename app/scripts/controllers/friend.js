@@ -10,7 +10,7 @@
 angular.module('istarVrWebSiteApp')
   .controller('FriendCtrl', function (OauthBearerService, $scope, $cookies, $location) {
 
-    if(!$cookies.getObject('token')){
+    if(!$cookies.getObject('access_token')){
       $location.path('/login')
     }
 

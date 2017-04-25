@@ -10,11 +10,12 @@
 angular.module('istarVrWebSiteApp')
   .controller('WelcomeCtrl',  function (OauthBearerService,$cookies,$location,$scope) {
 
-    if(!$cookies.getObject('token')){
+    if(!$cookies.getObject('access_token')){
       $location.path('/login')
     }
 
     var getparams = $location.search();
+    $scope.profilePicture = 'http://localhost:8086/images/'+getparams.username
 
     $scope.addFriend = function()
     {
@@ -141,6 +142,6 @@ angular.module('istarVrWebSiteApp')
     //
     // };
 
-    // fetching oauth token and storing in cookie (both operations done by service)
+    // fetching oauth access_token and storing in cookie (both operations done by service)
     //console.log($cookies.getObject("oauth2"));
   });
