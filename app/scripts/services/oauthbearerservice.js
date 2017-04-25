@@ -24,7 +24,7 @@ angular.module('istarVrWebSiteApp')
         method: "GET",
         url: "http://localhost:8086/api/0.1"+ url,
         headers: {
-          "Authorization": "Bearer " + $cookies.getObject("token"),
+          "Authorization": "Bearer " + $cookies.getObject("access_token"),
 
         },
 
@@ -34,7 +34,7 @@ angular.module('istarVrWebSiteApp')
       delete $http.defaults.headers.common['X-Requested-With'];
 
       $http(req).then(function(data){
-        console.log("my data is " + data.data);
+        console.log("my data is " + data);
         callback(data.data);
 
       }, function(error){
@@ -46,24 +46,20 @@ angular.module('istarVrWebSiteApp')
 
     }
 
-    /*
-    this.postData = function() {
+
+    this.postData = function(url,postParams,callback) {
 
 
       // requesting for access token, this block of code should appear after login/signup flow
       // hardcoding the username and password for now
 
-      var postParams = {
-        username: username,
-        password: password,
 
-      }
 
       var req = {
         method: "POST",
-        url: "http://localhost:8086/api/0.1/oauth/token",
+        url: "http://localhost:8086/api/0.1" + url,
         headers: {
-          "Authorization": "Basic " + encoded,
+          "Authorization": "Bearer " + $cookies.getObject("access_token"),
           "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
 
         },
@@ -75,16 +71,16 @@ angular.module('istarVrWebSiteApp')
 
       $http(req).then(function(data){
 
+      callback(data.data);
 
-        // getting the oauth token's here
-        // setting the http header to use the access token and pushing it into cookie
 
 
       }, function(error){
+        callback(error, "err");
         console.log(error);
         return "error";
       });
 
     }
-*/
+
   });

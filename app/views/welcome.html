@@ -1,14 +1,19 @@
-<div class="container" ng-controller="ProfileCtrl">
+
+<div class="container" ng-controller="WelcomeCtrl">
   <div class=" panel panel-default">
     <div class="panel-heading">
       <div class="row">
         <div class="col-xs-12 col-md-3">
-          <img class="img-circle" ng-src="{{profilePicture}}" width="100px" height="100px">
+          <img class="img-circle" src="{{profilePicture}}" width="100px" height="100px">
         </div>
         <div class="col-xs-12 col-md-9">
           <h5>{{fullname}}</h5>
           <h5>{{username}}</h5>
-          <a href="#!/profile/editProfile" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>Edit Profile</a>
+
+          <p class="btn btn-default" ng-if='buttonvalue == "add friend"'  ng-click="addFriend()"><span class="glyphicon glyphicon-user"></span> Add Friend</p>
+          <p class="btn btn-default" ng-if='buttonvalue == "already friend"'  ng-click="removeFriend()"><span class="glyphicon glyphicon-user"></span> Remove Friend</p>
+          <p ng-if='buttonvalue == "request sent"' > Pending Request</p>
+
         </div>
       </div>
     </div>
@@ -47,8 +52,8 @@
           <td>{{area}}</td>
         </tr>
         <tr>
-          <td>Project</td>
-          <td>{{project}}</td>
+          <td>Work</td>
+          <td>{{work}}</td>
         </tr>
         <tr>
           <td>Introduction</td>
