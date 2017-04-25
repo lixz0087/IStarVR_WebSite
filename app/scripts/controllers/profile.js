@@ -32,8 +32,9 @@ angular.module('istarVrWebSiteApp')
           $scope.occupation = data.occupation;
           $scope.country = data.country;
           $scope.area = data.area;
-          $scope.work = data.work;
+          $scope.project = data.project;
           $scope.introduction = data.introduction;
+          $scope.profilePicture = 'http://localhost:8086/images/'+$cookies.getObject('username')
 
         }
       });

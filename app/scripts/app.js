@@ -17,7 +17,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ngFileUpload'
+    'ngFileUpload',
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -72,6 +72,10 @@ angular
         templateUrl: 'views/logout.html',
         controller: 'LogoutCtrl',
         controllerAs: 'logout'
+      })
+      .when('/video', {
+        templateUrl: 'views/video.html',
+        controller: 'VideoCtrl',
       })
       .otherwise({
         redirectTo: '/'

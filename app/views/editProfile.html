@@ -3,7 +3,12 @@
     <div class="panel-heading">
       <div class="row">
         <div class="col-xs-12 col-md-3">
-          <img class="img-circle" src="../images/steveJobs.png" width="100px" height="100px">
+          <img class="img-circle" ng-src="{{profilePicture}}" width="100px" height="100px">
+          <label class="btn btn-default btn-file">
+          Update Picture
+          <input style="display: none" type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+          </label>
+
         </div>
         <div class="col-xs-12 col-md-9">
           <h5>{{fullname}}</h5>
@@ -14,9 +19,10 @@
     </div>
 
     <div class="panel-body">
-      <form >
+      <form  >
         <div class="row"></div>
         <div class="form-group col-md-6 col-xs-12">
+        
           <div class="form-group">
           <label>First Name</label>
           <input type="text" class="form-control editprofile_form" ng-model="firstname">
@@ -58,18 +64,15 @@
             <input type="text" class="form-control editprofile_form"  ng-model="area">
           </div>
           <div class="form-group">
-            <label>Work</label>
-            <input type="text" class="form-control editprofile_form"  ng-model="work">
+            <label>Project</label>
+            <input type="text" class="form-control editprofile_form"  ng-model="project">
           </div>
           <div class="form-group">
             <label>Introduction</label>
             <input type="text" class="form-control editprofile_form"  ng-model="introduction">
           </div>
-        <div class="form-group">
-          <label>File input</label>
-          <input type="file" id="exampleInputFile">
         </div>
-        </div>
+
       </form>
 
     </div>
