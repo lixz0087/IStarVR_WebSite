@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <excludedPredefinedLibrary name="IStarVR_WebSite/node_modules" />
+    <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
 </project>

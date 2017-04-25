@@ -58,31 +58,41 @@ angular
         controller: 'SurbhiCtrl',
         controllerAs: 'surbhi'
       })
-      .when('/welcome', {
-        templateUrl: 'views/welcome.html',
-        controller: 'WelcomeCtrl',
-        controllerAs: 'welcome'
+      .when('/player360Video', {
+        templateUrl: 'views/player360Video.html',
+        controller: 'Player360VideoCtrl',
+        controllerAs: 'Player360VideoCtrl'
       })
-      .when('/friend', {
-        templateUrl: 'views/friend.html',
-        controller: 'FriendCtrl',
-        controllerAs: 'friend'
+      .when('/player3DModel', {
+        templateUrl: 'views/player3DModel.html',
+        controller: 'Player360ModelCtrl',
+        controllerAs: 'Player360ModelCtrl'
+          .when('/welcome', {
+            templateUrl: 'views/welcome.html',
+            controller: 'WelcomeCtrl',
+            controllerAs: 'welcome'
+          })
+          .when('/friend', {
+            templateUrl: 'views/friend.html',
+            controller: 'FriendCtrl',
+            controllerAs: 'friend'
+          })
+          .when('/logout', {
+            templateUrl: 'views/logout.html',
+            controller: 'LogoutCtrl',
+            controllerAs: 'logout'
+          })
+          .when('/video', {
+            templateUrl: 'views/video.html',
+            controller: 'VideoCtrl',
+          })
+          .when('/videos', {
+            templateUrl: 'views/videos.html',
+            controller: 'VideosCtrl',
+            controllerAs: 'videos'
+          })
+          .otherwise({
+            redirectTo: '/'
+          })
       })
-      .when('/logout', {
-        templateUrl: 'views/logout.html',
-        controller: 'LogoutCtrl',
-        controllerAs: 'logout'
-      })
-      .when('/video', {
-        templateUrl: 'views/video.html',
-        controller: 'VideoCtrl',
-      })
-      .when('/videos', {
-        templateUrl: 'views/videos.html',
-        controller: 'VideosCtrl',
-        controllerAs: 'videos'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
   });
