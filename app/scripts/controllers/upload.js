@@ -14,6 +14,7 @@ angular.module('istarVrWebSiteApp')
 
     var tagArray = ['Travel', 'Film', 'Sports', 'Concerts', 'Education', 'Fashion', 'Romance', 'Series', 'Adventure',
                     'Horror', 'Drama', 'Action', 'Comedy', 'Documentary', 'Animation'];
+    var categoryArray = ['Avatars', 'Clothes', '360 Videos', 'VR videos', 'Films'];
 
     // check if oauth cookie is set and if it hasn't expired
     if ($cookies.getObject("access_token") !== undefined) {
@@ -99,7 +100,8 @@ angular.module('istarVrWebSiteApp')
           key: data.Key,
           location: data.Location,
           thumbnail_location: dataFromThubmnail.Location,
-          tag: tagArray[parseInt($scope.tagOfVideo)] === undefined ? "" : tagArray[parseInt($scope.tagOfVideo)]
+          tag: tagArray[parseInt($scope.tagOfVideo)] === undefined ? "" : tagArray[parseInt($scope.tagOfVideo)],
+          category: categoryArray[parseInt($scope.category)]
       };
       // clearing tag number to prevent duplication
       $scope.tagOfVideo = '';
@@ -173,7 +175,7 @@ angular.module('istarVrWebSiteApp')
         $scope.privacy === "private" ? $cookies.getObject('temp-s3-creds').data.Credentials.SessionToken : $cookies.getObject('temp-s3-creds-public').data.Credentials.SessionToken
       });
 
-        var params = {Bucket: $scope.privacy === "private" ? 'istarvr' : 'publicistarvr', Key: 'ninja/'+file.name, ContentType: file.type , Body: file};
+        var params = {Bucket: $scope.privacy === "private" ? 'istarvr' : 'publicistarvr', Key: $cookies.getObject("username") + '/'+file.name, ContentType: file.type , Body: file};
           s3.upload(params, function(err, data) {
             if (err) {
                 console.log("error in uploading video" + err);

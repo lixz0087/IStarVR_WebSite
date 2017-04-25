@@ -40,28 +40,26 @@
               <optgroup label="3D model file(.fbx)">
                 <option value="1">Avatars</option>
                 <option value="2">Clothes</option>
-                <option value="2">Others</option>
               </optgroup>
               <optgroup label="Video(.mp4)">
                 <option value="3">360&deg; videos</option>
                 <option value="4">VR videos</option>
+                <option value="5">Films</option>
               </optgroup>
           </select>
         </div>
         <p style="color:red;" ng-if="uploadForm.category.$touched && uploadForm.category.$invalid">
           File type is required
         </p>
-        <div style="margin-top:1em;" class="dropdown" ng-show="category === '3' || category === '4'">
+        <div style="margin-top:1em;" class="dropdown" ng-show="category === '5' || category === '4' || category === '3'">
           <select  class="form-control" name="tag" ng-model="tagOfVideo">
             <option value="" disabled selected>Choose tag for your video</option>
               <option value="0">Travel</option>
-              <option value="1">Film</option>
               <option value="2">Sports</option>
               <option value="3">Concerts</option>
               <option value="4">Education</option>
               <option value="5">Fashion</option>
               <option value="6">Romance</option>
-              <option value="7">Series</option>
               <option value="8">Adventure</option>
               <option value="9">Horror</option>
               <option value="10">Drama</option>
