@@ -101,7 +101,8 @@ angular.module('istarVrWebSiteApp')
         location: data.Location,
         thumbnail_location: dataFromThubmnail.Location,
         tag: tagArray[parseInt($scope.tagOfVideo)] === undefined ? "" : tagArray[parseInt($scope.tagOfVideo)],
-        category: categoryArray[parseInt($scope.category)]
+        category: categoryArray[parseInt($scope.category)],
+        thumbnail_key: dataFromThubmnail.Key
       };
       // clearing tag number to prevent duplication
       $scope.tagOfVideo = '';
