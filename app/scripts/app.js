@@ -67,32 +67,32 @@ angular
         templateUrl: 'views/player3DModel.html',
         controller: 'Player360ModelCtrl',
         controllerAs: 'Player360ModelCtrl'
-          .when('/welcome', {
-            templateUrl: 'views/welcome.html',
-            controller: 'WelcomeCtrl',
-            controllerAs: 'welcome'
-          })
-          .when('/friend', {
-            templateUrl: 'views/friend.html',
-            controller: 'FriendCtrl',
-            controllerAs: 'friend'
-          })
-          .when('/logout', {
-            templateUrl: 'views/logout.html',
-            controller: 'LogoutCtrl',
-            controllerAs: 'logout'
-          })
-          .when('/video', {
-            templateUrl: 'views/video.html',
-            controller: 'VideoCtrl',
-          })
-          .when('/videos', {
-            templateUrl: 'views/videos.html',
-            controller: 'VideosCtrl',
-            controllerAs: 'videos'
-          })
-          .otherwise({
-            redirectTo: '/'
-          })
+      })
+      .when('/welcome', {
+        templateUrl: 'views/welcome.html',
+        controller: 'WelcomeCtrl',
+        controllerAs: 'welcome'
+      })
+      .when('/friend', {
+        templateUrl: 'views/friend.html',
+        controller: 'FriendCtrl',
+        controllerAs: 'friend'
+      })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'LogoutCtrl',
+        controllerAs: 'logout'
+      })
+      .when('/video', {
+        templateUrl: 'views/video.html',
+        controller: 'VideoCtrl',
+      })
+      .when('/videos', {
+        templateUrl: 'views/videos.html',
+        controller: 'VideosCtrl',
+        controllerAs: 'videos'
+      })
+      .otherwise({
+        redirectTo: '/'
       })
   });
