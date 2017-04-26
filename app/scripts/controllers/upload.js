@@ -10,7 +10,7 @@
 //
 
 angular.module('istarVrWebSiteApp')
-  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window) {
+  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window, $location) {
 
     var tagArray = ['Travel', 'Film', 'Sports', 'Concerts', 'Education', 'Fashion', 'Romance', 'Series', 'Adventure',
       'Horror', 'Drama', 'Action', 'Comedy', 'Documentary', 'Animation'];
@@ -79,6 +79,7 @@ angular.module('istarVrWebSiteApp')
         $scope.showProgressBar = false;
         $scope.successful = true;
         $scope.disableUploadBtn = false;
+        $location.path('/videos')
         // $scope.$apply(function() {
 
         // });
