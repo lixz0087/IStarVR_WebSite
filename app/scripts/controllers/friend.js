@@ -13,6 +13,7 @@ angular.module('istarVrWebSiteApp')
     if(!$cookies.getObject('access_token')){
       $location.path('/login')
     }
+    $scope.imageurl = 'http://localhost:8086/images'
 
     var init = function() {
       OauthBearerService.getData("/friendrequest/" + $cookies.getObject('username'), function (data) {

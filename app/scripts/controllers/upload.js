@@ -10,7 +10,7 @@
 //
 
 angular.module('istarVrWebSiteApp')
-  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window) {
+  .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window, $location) {
 
     var tagArray = ['Travel', 'Film', 'Sports', 'Concerts', 'Education', 'Fashion', 'Romance', 'Series', 'Adventure',
       'Horror', 'Drama', 'Action', 'Comedy', 'Documentary', 'Animation'];
@@ -45,7 +45,13 @@ angular.module('istarVrWebSiteApp')
       };
 
       $http(req).then(function (data) {
-        cookieType === "private" ? $cookies.putObject('temp-s3-creds', data) : $cookies.putObject('temp-s3-creds-public', data);
+        if (cookieType === "private") {
+          $cookies.putObject('temp-s3-creds', data);
+        } else if (cookieType === "thumbnail") {
+          $cookies.putObject('temp-s3-creds-thumbnail', data);
+        } else {
+          $cookies.putObject('temp-s3-creds-public', data);
+        }
         // call function to start uploading to S3
         uploadContentHelper($scope.file);
       }, function (error) {
@@ -73,6 +79,7 @@ angular.module('istarVrWebSiteApp')
         $scope.showProgressBar = false;
         $scope.successful = true;
         $scope.disableUploadBtn = false;
+        $location.path('/videos')
         // $scope.$apply(function() {
 
         // });
@@ -131,19 +138,18 @@ angular.module('istarVrWebSiteApp')
     function uploadThumbnail(data) {
       var s3 = new AWS.S3({
         apiVersion: "2006-03-01",
-        accessKeyId:
-          $scope.privacy === "private" ? $cookies.getObject('temp-s3-creds').data.Credentials.AccessKeyId : $cookies.getObject('temp-s3-creds-public').data.Credentials.AccessKeyId,
-        secretAccessKey:
-          $scope.privacy === "private" ? $cookies.getObject('temp-s3-creds').data.Credentials.SecretAccessKey : $cookies.getObject('temp-s3-creds-public').data.Credentials.SecretAccessKey,
-        sessionToken:
-          $scope.privacy === "private" ? $cookies.getObject('temp-s3-creds').data.Credentials.SessionToken : $cookies.getObject('temp-s3-creds-public').data.Credentials.SessionToken
+        accessKeyId: $cookies.getObject('temp-s3-creds-thumbnail').data.Credentials.AccessKeyId,
+        secretAccessKey: $cookies.getObject('temp-s3-creds-thumbnail').data.Credentials.SecretAccessKey,
+        sessionToken: $cookies.getObject('temp-s3-creds-thumbnail').data.Credentials.SessionToken,
+        region: 'us-west-2'
       });
 
       var params = {
-        Bucket: $scope.privacy === "private" ? 'istarvr' : 'publicistarvr',
+        Bucket: 'istarvrthumbnails',
         ContentType: $scope.thumbnail.type,
-        Key: 'thumbnails/' + $scope.thumbnail.name,
+        Key: $scope.thumbnail.name,
         Body: $scope.thumbnail,
+        ACL : 'public-read-write'
       };
       s3.upload(params, function(err, thumbnailData) {
         if (err) {
@@ -195,7 +201,7 @@ angular.module('istarVrWebSiteApp')
       //check if temp-s3-creds cookie is already set, if set check for expiry
       if (cookieType === "private") {
         if ($cookies.getObject('temp-s3-creds') !== undefined) {
-          if (Date.parse($cookies.getObject('temp-s3-creds').data.Credentials.Expiration) <= ((new Date().getTime()) - 1000)) {
+          if ((Date.parse($cookies.getObject('temp-s3-creds').data.Credentials.Expiration) - 5000) <= (new Date().getTime())) {
             requestTempS3Creds(cookieType);
             console.log("Requesting for S3 token IF");
           } else {
@@ -208,7 +214,7 @@ angular.module('istarVrWebSiteApp')
         }
       } else {
         if ($cookies.getObject('temp-s3-creds-public') !== undefined) {
-          if (Date.parse($cookies.getObject('temp-s3-creds-public').data.Credentials.Expiration) <= ((new Date().getTime()) - 1000)) {
+          if ((Date.parse($cookies.getObject('temp-s3-creds-public').data.Credentials.Expiration) - 5000) <= (new Date().getTime())) {
             requestTempS3Creds(cookieType);
             console.log("Requesting for S3 token-public IF");
           } else {
@@ -219,6 +225,20 @@ angular.module('istarVrWebSiteApp')
           requestTempS3Creds(cookieType);
           console.log("Requesting for S3 token-public else");
         }
+      }
+
+      // checking if the cookie for thumbnail bucket is present
+      if ($cookies.getObject('temp-s3-creds-thumbnail') !== undefined) {
+        if ((Date.parse($cookies.getObject('temp-s3-creds-thumbnail').data.Credentials.Expiration) - 5000) <= ((new Date().getTime()))) {
+          requestTempS3Creds("thumbnail");
+          console.log("Requesting for S3 token-thumbnail IF");
+        } else {
+          // call function to start uploading to S3
+          uploadContentHelper($scope.file);
+        }
+      } else {
+        requestTempS3Creds("thumbnail");
+        console.log("Requesting for S3 token-thumbnail else");
       }
     }
 

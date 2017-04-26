@@ -3,11 +3,13 @@
  */
 'use strict';
 angular.module('istarVrWebSiteApp')
-  .controller('Player360VideoCtrl', function ($scope, $location, OauthService, $http, $cookies, $window, $sce) {
+  .controller('Player360VideoCtrl', function ($scope, $location, OauthService, $http,$httpParamSerializer, $cookies, $window, $sce) {
     let backendURL = "http://localhost:8086/api/0.1/get_temp_credentials";
     let bucket = $location.search().bucketName;
     let key = $location.search().key;
-
+    let aws = AWS;
+    let s3;
+    let preSignedURl;
 
     let temCredential;
 
@@ -23,7 +25,7 @@ angular.module('istarVrWebSiteApp')
     }
 
 
-    let requestTempS3Creds = function(cookieType) {
+    let requestTempS3Creds = function(cookieType, callback) {
       let postParams = {
         username: $cookies.getObject("username"),
         bucket_type: cookieType
@@ -40,9 +42,11 @@ angular.module('istarVrWebSiteApp')
       };
 
       $http(req).then(function (data) {
-        cookieType === "private" ? $cookies.putObject('temp-s3-creds', data) : $cookies.putObject('temp-s3-creds-public', data);
-        cookieType === "private" ? $cookies.putObject('temp-s3-creds-expires-in', data.Credentials.Expiration) : $cookies.putObject('temp-s3-creds-public-expires-in', data.Credentials.Expiration);
+        cookieType === "private" ? $cookies.putObject('temp-s3-creds', data.data) : $cookies.putObject('temp-s3-creds-public', data.data);
+        cookieType === "private" ? $cookies.putObject('temp-s3-creds-expires-in', data.data.Credentials.Expiration) : $cookies.putObject('temp-s3-creds-public-expires-in', data.data.Credentials.Expiration);
+        callback()
       }, function (error) {
+        callback(error)
         console.log(error);
       });
     };
@@ -50,46 +54,98 @@ angular.module('istarVrWebSiteApp')
 
     if(bucket == 'istarvr') {
       if ($cookies.getObject("temp-s3-creds") !== undefined || $cookies.getObject("temp-s3-creds-expires-in") <= ((new Date().getTime()) - 1000)) {
-        requestTempS3Creds("private");
-        temCredential = $cookies.getObject("temp-s3-creds-expires-in");
+        requestTempS3Creds("private",function(err){
+          if(!err) {
+            temCredential = $cookies.getObject("temp-s3-creds");
+            aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
+              temCredential.Credentials.SessionToken);
+            aws.config.update({
+              signatureVersion: 'v4'
+            });
+
+
+            s3 = new aws.S3({region: "us-west-2"});
+            preSignedURl = s3.getSignedUrl('getObject', {
+              Bucket: bucket,
+              Expires: 60 * 3600,
+              Key: key
+            });
+          }
+
+        });
+      }
+      else{
+        temCredential = $cookies.getObject("temp-s3-creds");
+        aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
+          temCredential.Credentials.SessionToken);
+        aws.config.update({
+          signatureVersion: 'v4'
+        });
+
+
+        s3 = new aws.S3({region : "us-west-2"});
+        preSignedURl = s3.getSignedUrl('getObject', {
+          Bucket: bucket,
+          Expires: 60 * 3600,
+          Key: key
+        });
+
       }
     } else {
       if ($cookies.getObject("temp-s3-creds-public") !== undefined || $cookies.getObject("temp-s3-creds-public-expires-in") <= ((new Date().getTime()) - 1000)) {
-        requestTempS3Creds("public");
-        temCredential = $cookies.getObject("temp-s3-creds-public-expires-in");
+        requestTempS3Creds("public",function(err){
+          if(!err) {
+            temCredential = $cookies.getObject("temp-s3-creds-public");
+            aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
+              temCredential.Credentials.SessionToken);
+            aws.config.update({
+              signatureVersion: 'v4'
+            });
+
+
+            s3 = new aws.S3({region: "us-west-2"});
+            preSignedURl = s3.getSignedUrl('getObject', {
+              Bucket: bucket,
+              Expires: 60 * 3600,
+              Key: key
+            });
+          }
+
+        });
+      }
+      else{
+        temCredential = $cookies.getObject("temp-s3-creds-public");
+        aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
+          temCredential.Credentials.SessionToken);
+        aws.config.update({
+          signatureVersion: 'v4'
+        });
+
+
+        s3 = new aws.S3({region: "us-west-2"});
+        preSignedURl = s3.getSignedUrl('getObject', {
+          Bucket: bucket,
+          Expires: 60 * 3600,
+          Key: key
+        });
+
+
       }
     }
 
+    $scope.clickButton = function() {
 
-
-    let aws = AWS;
-    aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
-      temCredential.Credentials.SessionToken);
-    aws.config.update({
-      signatureVersion: 'v4'
-    });
-
-
-    let s3 = new aws.S3({region : "us-west-1"});
-    let preSignedURl = s3.getSignedUrl('getObject', {
-      Bucket: bucket,
-      Expires: 60 * 3600,
-      Key: key
-    });
-
-
-
-
-
-    let player = jwplayer('player').setup({
-      hlshtml: true,
-      playlist: [{
-        title: 'Caminandes VR',
-        mediaid: 'AgqYcfAT',
-        stereomode: 'stereoscopicTopBottom',
-        file: preSignedURl
-      }]
-    });
+      let player = jwplayer('player').setup({
+        hlshtml: true,
+        playlist: [{
+          title: 'Caminandes VR',
+          mediaid: 'AgqYcfAT',
+          stereomode: 'monoscopic',
+          file: preSignedURl
+        }]
+      });
+    }
+    //monoscopic ,stereoscopicLeftRight,stereoscopicTopBottom
 
     // Google VRview
     //

@@ -8,7 +8,7 @@
  * Controller of the istarVrWebSiteApp
  */
 angular.module('istarVrWebSiteApp')
-  .controller('VideoCtrl', function ($cookies) {
+  .controller('VideoCtrl', function ($cookies,OauthService) {
 
     // check if oauth cookie is set and if it hasn't expired
     if ($cookies.getObject("access_token") !== undefined) {
