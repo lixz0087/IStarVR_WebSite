@@ -18,11 +18,11 @@ angular.module('istarVrWebSiteApp')
         $cookies.remove('username')
         $cookies.remove('access_token')
         $cookies.remove('temp-s3-creds-thumbnail')
-
         $cookies.remove('temp-s3-creds')
-
+        $cookies.remove("expires_in")
         $cookies.remove('temp-s3-creds-public')
-
+        $cookies.remove('temp-s3-creds-public-expires-in')
+        $cookies.remove('temp-s3-creds-expires-in')
         $location.path('/login')
       }
     })

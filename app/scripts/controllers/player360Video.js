@@ -15,7 +15,7 @@ angular.module('istarVrWebSiteApp')
 
     // check if oauth cookie is set and if it hasn't expired
     if ($cookies.getObject("access_token") !== undefined) {
-      if ($cookies.getObject("expires_in") <= ((new Date().getTime()) - 1000)) {
+      if ( (Date.parse($cookies.getObject("expires_in")) - 5000) <= (new Date().getTime()) ) {
         OauthService.fetchRefreshToken();
         console.log("Requesting for oauth token IF");
       }
@@ -53,8 +53,7 @@ angular.module('istarVrWebSiteApp')
 
 
     if(bucket == 'istarvr') {
-      if ($cookies.getObject("temp-s3-creds") == undefined || $cookies.getObject("temp-s3-creds-expires-in") <= ((new Date().getTime()) - 1000)) {
-
+      if ($cookies.getObject("temp-s3-creds") == undefined || (Date.parse($cookies.getObject('temp-s3-creds-expires-in')) - 5000) <= (new Date().getTime())) {
         requestTempS3Creds("private",function(err){
           if(!err) {
             temCredential = $cookies.getObject("temp-s3-creds");
@@ -93,7 +92,7 @@ angular.module('istarVrWebSiteApp')
 
       }
     } else {
-      if ($cookies.getObject("temp-s3-creds-public") == undefined || $cookies.getObject("temp-s3-creds-public-expires-in") <= ((new Date().getTime()) - 1000)) {
+      if ($cookies.getObject("temp-s3-creds-public") == undefined || (Date.parse($cookies.getObject('temp-s3-creds-public-expires-in')) - 5000) <= (new Date().getTime())) {
         requestTempS3Creds("public",function(err){
           if(!err) {
             temCredential = $cookies.getObject("temp-s3-creds-public");

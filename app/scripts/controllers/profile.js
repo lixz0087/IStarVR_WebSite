@@ -18,6 +18,7 @@ angular.module('istarVrWebSiteApp')
       OauthBearerService.getData('/users/' + $cookies.getObject('username'), function (data, err) {
 
         if (err) {
+          $location.path('/login')
         }
 
         else {
@@ -34,6 +35,8 @@ angular.module('istarVrWebSiteApp')
           $scope.area = data.area;
           $scope.project = data.project;
           $scope.introduction = data.introduction;
+          $scope.category = data.category;
+          $scope.accountType = data.accountType;
           $scope.profilePicture = 'http://localhost:8086/images/'+$cookies.getObject('username')
 
         }
