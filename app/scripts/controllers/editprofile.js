@@ -65,13 +65,19 @@ angular.module('istarVrWebSiteApp')
           country : $scope.country ,
           area: $scope.area ,
           project: $scope.project,
-          introduction: $scope.introduction
+          introduction: $scope.introduction,
+            category: $scope.category,
+            accountType: $scope.accountType
           }
 
           OauthBearerService.postData('/users/'+$cookies.getObject('username'), postParams, function (data, err) {
             if (!err){
 
               $location.path('/profile')
+            }
+            else{
+                $location.path('/login')
+
             }
           })
         }

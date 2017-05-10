@@ -39,6 +39,12 @@ angular.module('istarVrWebSiteApp')
       $http(req).then(function(data){
         // getting the oauth token's here
         // setting the http header to use the access token and pushing it into cookie
+        $cookies.remove('temp-s3-creds-thumbnail')
+        $cookies.remove('temp-s3-creds')
+        $cookies.remove('temp-s3-creds-public')
+        $cookies.remove('temp-s3-creds-public-expires-in')
+        $cookies.remove('temp-s3-creds-expires-in')
+
         $cookies.putObject('access_token', data.data.access_token);
         $cookies.putObject('refresh_token', data.data.refresh_token);
         $cookies.putObject('expires_in', data.data.expires_in);

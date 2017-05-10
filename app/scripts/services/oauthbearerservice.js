@@ -34,7 +34,6 @@ angular.module('istarVrWebSiteApp')
       delete $http.defaults.headers.common['X-Requested-With'];
 
       $http(req).then(function(data){
-        console.log("my data is " + data);
         callback(data.data);
 
       }, function(error){

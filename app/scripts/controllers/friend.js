@@ -16,13 +16,13 @@ angular.module('istarVrWebSiteApp')
     $scope.imageurl = 'http://localhost:8086/images'
 
     var init = function() {
-      OauthBearerService.getData("/friendrequest/" + $cookies.getObject('username'), function (data) {
-        console.log(data);
+      OauthBearerService.getData("/friendrequest/" + $cookies.getObject('username'), function (data,err) {
+        if(err) $location.path('/login');
         $scope.requests = data.list;
       })
 
-      OauthBearerService.getData("/friends/" + $cookies.getObject('username'), function (data) {
-        console.log(data);
+      OauthBearerService.getData("/friends/" + $cookies.getObject('username'), function (data, err) {
+        if(err) $location.path('/login');
         $scope.friends = data.list;
       })
     }
