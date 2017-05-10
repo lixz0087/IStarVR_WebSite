@@ -42,8 +42,7 @@ angular.module('istarVrWebSiteApp')
       };
 
       $http(req).then(function (data) {
-        cookieType === "private" ? $cookies.putObject('temp-s3-creds', data.data) : $cookies.putObject('temp-s3-creds-public', data.data);
-        cookieType === "private" ? $cookies.putObject('temp-s3-creds-expires-in', data.data.Credentials.Expiration) : $cookies.putObject('temp-s3-creds-public-expires-in', data.data.Credentials.Expiration);
+        cookieType === "private" ? $cookies.putObject('temp-s3-creds', data) : $cookies.putObject('temp-s3-creds-public', data);
         callback()
       }, function (error) {
         callback(error)
@@ -53,12 +52,12 @@ angular.module('istarVrWebSiteApp')
 
 
     if(bucket == 'istarvr') {
-      if ($cookies.getObject("temp-s3-creds") == undefined || (Date.parse($cookies.getObject('temp-s3-creds-expires-in')) - 5000) <= (new Date().getTime())) {
+      if ($cookies.getObject("temp-s3-creds") == undefined || (Date.parse($cookies.getObject('temp-s3-creds').data.Credentials.Expiration)  - 5000) <= (new Date().getTime())) {
         requestTempS3Creds("private",function(err){
           if(!err) {
             temCredential = $cookies.getObject("temp-s3-creds");
-            aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
-              temCredential.Credentials.SessionToken);
+            aws.config.credentials = new aws.Credentials(temCredential.data.Credentials.AccessKeyId, temCredential.data.Credentials.SecretAccessKey,
+              temCredential.data.Credentials.SessionToken);
             aws.config.update({
               signatureVersion: 'v4'
             });
@@ -76,8 +75,8 @@ angular.module('istarVrWebSiteApp')
       }
       else{
         temCredential = $cookies.getObject("temp-s3-creds");
-        aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
-          temCredential.Credentials.SessionToken);
+        aws.config.credentials = new aws.Credentials(temCredential.data.Credentials.AccessKeyId, temCredential.data.Credentials.SecretAccessKey,
+          temCredential.data.Credentials.SessionToken);
         aws.config.update({
           signatureVersion: 'v4'
         });
@@ -92,12 +91,12 @@ angular.module('istarVrWebSiteApp')
 
       }
     } else {
-      if ($cookies.getObject("temp-s3-creds-public") == undefined || (Date.parse($cookies.getObject('temp-s3-creds-public-expires-in')) - 5000) <= (new Date().getTime())) {
+      if ($cookies.getObject("temp-s3-creds-public") == undefined || (Date.parse($cookies.getObject('temp-s3-creds-public').data.Credentials.Expiration)  - 5000) <= (new Date().getTime())) {
         requestTempS3Creds("public",function(err){
           if(!err) {
             temCredential = $cookies.getObject("temp-s3-creds-public");
-            aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
-              temCredential.Credentials.SessionToken);
+            aws.config.credentials = new aws.Credentials(temCredential.data.Credentials.AccessKeyId, temCredential.data.Credentials.SecretAccessKey,
+              temCredential.data.Credentials.SessionToken);
             aws.config.update({
               signatureVersion: 'v4'
             });
@@ -115,8 +114,8 @@ angular.module('istarVrWebSiteApp')
       }
       else{
         temCredential = $cookies.getObject("temp-s3-creds-public");
-        aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
-          temCredential.Credentials.SessionToken);
+        aws.config.credentials = new aws.Credentials(temCredential.data.Credentials.AccessKeyId, temCredential.data.Credentials.SecretAccessKey,
+          temCredential.data.Credentials.SessionToken);
         aws.config.update({
           signatureVersion: 'v4'
         });
