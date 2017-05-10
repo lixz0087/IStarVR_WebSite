@@ -12,9 +12,9 @@
 angular.module('istarVrWebSiteApp')
   .controller('UploadCtrl', function ($scope, $http, Upload, $cookies, $httpParamSerializer, OauthService, $window, $location) {
 
-    var tagArray = ['Travel', 'Film', 'Sports', 'Concerts', 'Education', 'Fashion', 'Romance', 'Series', 'Adventure',
-      'Horror', 'Drama', 'Action', 'Comedy', 'Documentary', 'Animation'];
-    var categoryArray = ['Avatars', 'Clothes', '360 Videos', 'VR videos', 'Films'];
+    var tagArray = ['Film', 'Concerts','Sports','Travel', 'Fashion', 'Education', 'Show'];
+    var categoryArray = ['Avatars', 'Clothes', 'Accessories', 'Live 360 Videos', '360 Videos', 'VR videos'];
+    var filmCategory = ['Documentary', 'Romance', 'Adventure', 'Horror', 'Animation', 'Comedy'];
 
     // check if oauth cookie is set and if it hasn't expired
     if ($cookies.getObject("access_token") !== undefined) {
@@ -109,7 +109,9 @@ angular.module('istarVrWebSiteApp')
         thumbnail_location: dataFromThubmnail.Location,
         tag: tagArray[parseInt($scope.tagOfVideo)] === undefined ? "" : tagArray[parseInt($scope.tagOfVideo)],
         category: categoryArray[parseInt($scope.category)],
-        thumbnail_key: dataFromThubmnail.Key
+        thumbnail_key: dataFromThubmnail.Key,
+        film_category : filmCategory[parseInt($scope.tagOfFilm)] === undefined ? "" : filmCategory[parseInt($scope.tagOfFilm)],
+        wierd_tag : $scope.wierdTag
       };
       // clearing tag number to prevent duplication
       $scope.tagOfVideo = '';
