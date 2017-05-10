@@ -114,7 +114,6 @@ angular.module('istarVrWebSiteApp')
         });
       }
       else{
-
         temCredential = $cookies.getObject("temp-s3-creds-public");
         aws.config.credentials = new aws.Credentials(temCredential.Credentials.AccessKeyId, temCredential.Credentials.SecretAccessKey,
           temCredential.Credentials.SessionToken);
