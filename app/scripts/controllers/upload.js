@@ -18,7 +18,7 @@ angular.module('istarVrWebSiteApp')
 
     // check if oauth cookie is set and if it hasn't expired
     if ($cookies.getObject("access_token") !== undefined) {
-      if ($cookies.getObject("expires_in") <= ((new Date().getTime()) - 1000)) {
+      if ((Date.parse($cookies.getObject("expires_in")) - 5000) <= (new Date().getTime())) {
         OauthService.fetchRefreshToken();
         console.log("Requesting for oauth token IF");
       }
